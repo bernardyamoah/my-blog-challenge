@@ -40,28 +40,45 @@ import { Separator } from "@radix-ui/react-dropdown-menu";
 
 
 import { toast } from "sonner";
+import { Textarea } from "./ui/textarea";
 
 
 interface PresetActionsProps {
-  name: string;
+  post: Post;
   id: number;
  
 }
 
 export function PresetActions({
-  name,
+ post,
   id,
 
 }: PresetActionsProps) {
+  const [updatedName, setUpdatedName] = useState(post.name);
   const [showDialog, setShowDialog] = useState(false);
+ const [body, setBody] = useState(post.body);
 
 
- 
-const  handleSubmit = async () => {
-}
-const handleDeletepost = async () => {}
+  async function deletePost() {
+    fetch(  `https://jsonplaceholder.typicode.com/comments?id=${id}`, {
+      method: 'DELETE',
+    })
+      .then(response => {
+        if (response.ok) {
+       toast.success("File deleted successfully");
+        } else {
+        toast.error("Post not deleted");
+        }
+      })
+      .catch(error => {
+       toast.error(error.message);
+      });
+      setShowDeleteDialog(false);
+  }
 
- 
+
+
+
  
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
@@ -105,27 +122,29 @@ const handleDeletepost = async () => {}
               <Label htmlFor="name" className="block col-span-4 text-left">
                 Name
               </Label>
-              {/* <Input
+              <Input
                 id="name"
                 value={updatedName}
                 onChange={(event) => setUpdatedName(event.target.value)}
                 className="block col-span-4"
-              /> */}
+              />
             </div>
 
             <Separator />
             {/* Update the file */}
             <div className="grid items-center grid-cols-4 gap-4">
               <Label htmlFor="file" className="col-span-4 text-left">
-                Update file
+               Body
               </Label>
-             
+             <Textarea className="col-span-4 w-full h-44">
+            {post.body}
+             </Textarea>
             </div>
 
 
           </div>
           <DialogFooter>
-            <Button type="submit" onClick={handleSubmit}>
+            <Button type="submit" >
               Save changes
             </Button>
           </DialogFooter>
@@ -143,7 +162,7 @@ const handleDeletepost = async () => {}
           </AlertDialogHeader>
           <AlertDialogFooter className="gap-3 mt-2">
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <Button variant="destructive" onClick={handleDeletepost}>
+            <Button variant="destructive" onClick={deletePost}>
               Delete
             </Button>
           </AlertDialogFooter>

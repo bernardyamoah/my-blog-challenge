@@ -1,6 +1,6 @@
 // import Image from 'next/image'
 
-import { Blogs } from "@/components/Users";
+import { Blogs } from "@/components/blogs";
 
 
 export default function Home() {
