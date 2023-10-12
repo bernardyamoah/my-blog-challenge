@@ -37,19 +37,17 @@ const [showDeleteDialog, setShowDeleteDialog] = useState(false);
    
     return (
     <>
-    <section className="w-44">
-
-        <h1 className="text-2xl md:text-3xl text-center text-semibold uppercase mb-6"> {name} </h1>
- <aside className=" max-w-xs text-center  ">
-{body}
- </aside>
- <div className="flex gap-6 items-center justify-center mt-16">
- <Button variant='destructive' onClick={() => setShowDeleteDialog(true)}>   <Trash className="w-4 h-4 mr-2" /> delete</Button>
- <Button onClick={()=>setShowDialog(true)}>   <Edit className="w-4 h-4 mr-2" /> Edit</Button>
+    <section >
+ <div className="flex gap-6 items-center justify-center mb-10">
+ <Button variant='destructive' onClick={() => setShowDeleteDialog(true)}>   <Trash className="w-4 h-4" /> </Button>
+ <Button onClick={()=>setShowDialog(true)}>   <Edit className="w-4 h-4 " /> </Button>
  </div>
- </section>
+        <h1 className="text-2xl md:text-3xl text-center text-semibold uppercase mb-6"> {name} </h1>
+ <aside className=" max-w-xl mx-auto text-center  ">
+{body}
+ </aside></section>
 
- 
+
  <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="sm:max-w-[480px]">
           <DialogHeader>

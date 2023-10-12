@@ -2,7 +2,6 @@
 
 import getPostById from "@/lib/getPostById";
 import Post from './post'
-import { PresetActions } from "@/components/blog-actions";
 
 export default async function Page({params: {id}}) {
 

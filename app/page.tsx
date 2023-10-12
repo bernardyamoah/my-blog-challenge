@@ -63,7 +63,7 @@ const posts= await getPosts();
             >
               {post.email}
             </Link>
-            <div className="mt-3 text-muted-foreground truncate">{post.body}</div>
+            <div className="mt-3 text-muted-foreground">{post.body}</div>
           </CardContent>
 
           <CardFooter className="flex justify-end">
@@ -71,7 +71,7 @@ const posts= await getPosts();
                 href={`/post/${post.id}`}
                 className="hover:underline text-amber-500  text-sm"
                 >
-                <Button>
+                <Button className="w-full h-full">
                 Read more
             </Button>
               </Link>
