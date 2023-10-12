@@ -31,7 +31,7 @@ export default async function RootLayout({
         >
           <Navbar/>
           <BackButtonNavigation/>
-           <div className='mt-24 p-4 pt-24'> {children}</div>
+           <div className='pt-24 mt-24'> {children}</div>
             <Toaster />
           </ThemeProvider>
           <Analytics />
