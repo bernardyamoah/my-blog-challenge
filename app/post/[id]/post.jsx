@@ -20,12 +20,13 @@ import {
 } from "@/components/ui/alert-dialog";
 export default function Post({post}) {
     const {name, body, id} = post
-    const [updatedPost, setUpdatedPost] = useState(null);
-const [updatedName, setUpdatedName] = useState(name);
+    const [updatedPost, setUpdatedPost] = useState({ name, body });
+   const [updatedName, setUpdatedName] = useState(name);
+    const [updatedBody, setUpdatedBody] = useState(body);
 const [showDialog, setShowDialog] = useState(false);
 const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const handleUpdate = () => {
-        setUpdatedPost({ ...updatedPost, name: updatedName });
+    setUpdatedPost({ name: updatedName, body: updatedBody})
         toast.success("Post Loaded")
         setShowDialog(false);
     };
@@ -42,9 +43,9 @@ const [showDeleteDialog, setShowDeleteDialog] = useState(false);
  <Button variant='destructive' onClick={() => setShowDeleteDialog(true)}>   <Trash className="w-4 h-4" /> </Button>
  <Button onClick={()=>setShowDialog(true)}>   <Edit className="w-4 h-4 " /> </Button>
  </div>
-        <h1 className="text-2xl md:text-3xl text-center text-semibold uppercase mb-6"> {name} </h1>
+        <h1 className="text-2xl md:text-3xl text-center text-semibold uppercase mb-6"> {updatedPost.name} </h1>
  <aside className=" max-w-xl mx-auto text-center  ">
-{body}
+{updatedPost.body}
  </aside></section>
 
 
@@ -73,11 +74,11 @@ const [showDeleteDialog, setShowDeleteDialog] = useState(false);
             <Separator />
         
             <div className="grid items-center grid-cols-4 gap-4">
-              <Label htmlFor="file" className="col-span-4 text-left">
+              <Label htmlFor="body" className="col-span-4 text-left">
                Body
               </Label>
-             <Textarea className="col-span-4 w-full h-44">
-            {post.body}
+             <Textarea className="col-span-4 w-full h-44"       onChange={(event) => setUpdatedBody(event.target.value)}>
+             { updatedPost.body}
              </Textarea>
             </div>
 
