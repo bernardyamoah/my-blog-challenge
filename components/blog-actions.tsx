@@ -1,8 +1,7 @@
 "use client";
 
-
-import React, { useCallback, useState } from "react";
-import { Badge, Edit, MoreHorizontal, Trash } from "lucide-react";
+import React, {  useState } from "react";
+import {  Edit, MoreHorizontal, Trash } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -41,43 +40,47 @@ import { Separator } from "@radix-ui/react-dropdown-menu";
 
 import { toast } from "sonner";
 import { Textarea } from "./ui/textarea";
+import deletePost from '@/lib/deletePost'
 
 
 interface PresetActionsProps {
-  post: Post;
-  id: number;
- 
+post:Post
 }
 
-export function PresetActions({
- post,
-  id,
-
-}: PresetActionsProps) {
-  const [updatedName, setUpdatedName] = useState(post.name);
+export async function PresetActions({ post }: PresetActionsProps) {
   const [showDialog, setShowDialog] = useState(false);
- const [body, setBody] = useState(post.body);
+  const [updatedName,setUpdatedName]=useState(post.title)
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [body, setBody] = useState("");
+  const selectedPostId = post.id;
 
+  const handleUpdate = () => {
+    const updatedPosts: Post[] = posts.map((post) => {
+      if (post.id === selectedPostId) {
+        return { ...post, body: body };
+      }
+      return post;
+    });
+  
+    setPosts(updatedPosts);
+    setShowDialog(false);
+  };
 
-  async function deletePost() {
-    fetch(  `https://jsonplaceholder.typicode.com/comments?id=${id}`, {
-      method: 'DELETE',
-    })
-      .then(response => {
-        if (response.ok) {
-       toast.success("File deleted successfully");
-        } else {
-        toast.error("Post not deleted");
-        }
-      })
-      .catch(error => {
-       toast.error(error.message);
-      });
-      setShowDeleteDialog(false);
+const handleDelete =  () => {
+  try {
+    
+     deletePost(post.id);
+    
+   
+    setPosts(posts.filter(p => p.id !== post.id));
+    
+    // Show success message
+    toast.success("Post deleted successfully");
+  } catch (error) {
+    // Show error message
+    toast.error("Failed to delete post");
   }
-
-
-
+};
 
  
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -110,10 +113,9 @@ export function PresetActions({
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="sm:max-w-[480px]">
           <DialogHeader>
-            <DialogTitle>Change name slide </DialogTitle>
+            <DialogTitle>Edit Post</DialogTitle>
             <DialogDescription>
-              Make changes to your slides here. Click save when you&apos;re
-              done.
+              Edit the name and body of the post.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 p-4">
@@ -131,7 +133,7 @@ export function PresetActions({
             </div>
 
             <Separator />
-            {/* Update the file */}
+        
             <div className="grid items-center grid-cols-4 gap-4">
               <Label htmlFor="file" className="col-span-4 text-left">
                Body
@@ -144,7 +146,7 @@ export function PresetActions({
 
           </div>
           <DialogFooter>
-            <Button type="submit" >
+            <Button type="submit" onClick={handleUpdate} >
               Save changes
             </Button>
           </DialogFooter>
@@ -162,7 +164,7 @@ export function PresetActions({
           </AlertDialogHeader>
           <AlertDialogFooter className="gap-3 mt-2">
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <Button variant="destructive" onClick={deletePost}>
+            <Button variant="destructive" onClick={handleDelete}>
               Delete
             </Button>
           </AlertDialogFooter>

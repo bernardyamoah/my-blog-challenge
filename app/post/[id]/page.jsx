@@ -1,7 +1,8 @@
-
+'use client'
 
 import getPostById from "@/lib/getPostById";
 import Post from './post'
+import { PresetActions } from "@/components/blog-actions";
 
 export default async function Page({params: {id}}) {
 
@@ -11,10 +12,12 @@ export default async function Page({params: {id}}) {
  <>
 <div className="max-w-3xl mx-auto">
 {postContent.map((post)=>(
-  <Post post={post} />
+ <>
+  <Post post={post} key={post.id} />
+
+</>
  )) }
 </div>
- 
  </>
   
   );

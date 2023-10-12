@@ -1,3 +1,4 @@
+'use client'
 import {
   Card,
   CardContent,
@@ -8,12 +9,36 @@ import {
 import Link from "next/link";
 
 import getPosts from "@/lib/getPosts";
-import { PresetActions } from "./blog-actions";
+// import { PresetActions } from "./blog-actions";
 import { Button } from "./ui/button";
+import { PresetActions } from "./blog-actions";
+import { useEffect, useState } from "react";
 
-export async function Blogs() {
-  const posts: Post[] = await getPosts();
+export function Blogs() {
+  const [posts, setPosts] = useState<Post[]>([]);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const fetchedPosts = await getPosts();
+      setPosts(fetchedPosts);
+    };
 
+    fetchPosts();
+  }, []);
+  async function deletePost(id: number): Promise<void> {
+    try {
+      const response = await fetch(`https://api.example.com/posts/${id}`, {
+        method: 'DELETE',
+      });
+  
+      if (response.ok) {
+        console.log(`Post with id ${id} deleted`);
+      } else {
+        console.error(`Failed to delete post with id ${id}`);
+      }
+    } catch (error) {
+      console.error(`An error occurred while deleting post with id ${id}`, error);
+    }
+  }
   return (
     <>
       {posts.map((post) => (
@@ -24,7 +49,7 @@ export async function Blogs() {
           <CardHeader>
             <CardTitle className="flex justify-between text-2xl capitalize">
               {post.name}
-              <PresetActions post={post} id={post.id} />
+              <PresetActions  post={post} setPosts={setPosts} posts={posts}/>
             </CardTitle>
           </CardHeader>
 
