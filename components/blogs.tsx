@@ -22,7 +22,7 @@ export async function Blogs() {
           className="sm:max-w-2xl w-full rounded-xl shadow-md overflow-hidden md:max-w-sm self-center "
         >
           <CardHeader>
-            <CardTitle className="flex justify-between text-xl">
+            <CardTitle className="flex justify-between text-2xl capitalize">
               {post.name}
               <PresetActions post={post} id={post.id} />
             </CardTitle>
