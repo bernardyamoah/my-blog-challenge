@@ -58,4 +58,4 @@ If you encounter any issues while setting up or running the project, try the fol
 
 ### Conclusion
 
-Congratulations! You have successfully set up and run the project. You can now add and delete posts using the provided functionality. If you have any further questions or need assistance, please don't hesitate to reach out to me at @bernardyamoah and twitter['https://twitter.com/byayamoah']
+Congratulations! You have successfully set up and run the project. You can now add and delete posts using the provided functionality. If you have any further questions or need assistance, please don't hesitate to reach out to me on Twitter at @byayamoah. Happy coding!
