@@ -1,10 +1,7 @@
-
 import * as React from "react";
 import Link from "next/link";
 import { ModeToggle } from "./ModeToggle";
-import { PresetActions } from "./blog-actions";
-
-
+import { AddPost } from "./addPost";
 
 export function Navbar() {
   return (
@@ -16,12 +13,12 @@ export function Navbar() {
             className="font-bold text-left text-zinc-900 dark:text-white"
             href={"/"}
           >
-        Blogs
+            Blogs
           </Link>
 
           {/* Navigation and Mode Toggle */}
           <div className="flex items-center gap-2 ml-auto">
-            <PresetActions />
+            {/* <AddPost /> */}
             <ModeToggle />
           </div>
         </nav>
