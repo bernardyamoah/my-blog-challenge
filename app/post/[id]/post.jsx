@@ -24,7 +24,7 @@ import { updatePost } from "@/lib/updatePost";
 export default function Post({ post }) {
  
   const router = useRouter();
-  const [postData,setPostData] = useState({ title: post.title, body: post.body }); 
+  const [postData,setPostData] = useState({ title: post.title, body: post.body ,username:post.username}); 
  
   const [showDialog, setShowDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -34,7 +34,7 @@ export default function Post({ post }) {
      
       return;
     }
-    await updatePost(post.$id, postData); 
+    await updatePost(post.$id, { title: postData.title, body: postData.body,username:postData.username }); ; 
     setShowDialog(false);
   };
 
@@ -74,7 +74,7 @@ export default function Post({ post }) {
               </Label>
               <Input
                 id="name"
-                value={postData.title} // Use postData.title instead of post.title
+                value={postData.title} 
                 onChange={(event) => setPostData({ ...postData, title: event.target.value })} 
                 className="block col-span-4"
               />
