@@ -1,4 +1,4 @@
-
+'use client'
 import {
   Card,
   CardContent,
@@ -11,12 +11,25 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {getPosts} from "@/lib/getPosts";
 import { Badge } from "@/components/ui/badge";
+import { useEffect, useState } from "react";
 
 
 
 export default async function Home() {
-  
-const posts:Post[] = await getPosts();
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const fetchedPosts = await getPosts();
+        setPosts(fetchedPosts);
+      } catch (error) {
+        console.error("Failed to fetch posts:", error);
+      }
+    };
+
+    fetchPosts();
+  }, [posts.length]);
 return (
   <section >
 
