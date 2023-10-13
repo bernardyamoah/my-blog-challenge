@@ -1,17 +1,16 @@
-interface User {
-    id: number;
-    name: string;
-    username: string;
-    email: string;
-    phone: string;
 
-  }
   
 interface Post {
-    postId: number;
-    id: number;
- name: string;
- email: string;
-title: string;
-  body: string;
+    title: string;
+    body: string;
+    $id: string;
+    username:string;
+    postId:number;
+    $createdAt: string;
   }
+interface PostData{
+    title:string;
+    body:string;
+    username:string;
+    postId:number;
+}

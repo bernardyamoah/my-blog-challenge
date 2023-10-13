@@ -1,16 +1,20 @@
-export default async function updatePost(post: Post, updatedName: string, updatedBody: string) {
+import { toast } from "sonner";
+import { databases } from "./appwrite";
 
-const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${post.id}`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        id: post.id,
-        title: updatedName,
-        body: updatedBody,
-     
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    });
-    return response.json()
-}
+export const updatePost = async (id: string, updatedAttributes: any) => {
+	try {
+		
+		await databases.updateDocument(
+			process.env.NEXT_PUBLIC_DATABASE_ID!,
+			process.env.NEXT_PUBLIC_POSTS_COLLECTION_ID!, 
+			id,
+			updatedAttributes
+		);
+
+			toast.success("Successfully updated post");
+		
+	} catch (error) {
+		// Handle any errors that occur during the update process
+		toast.error("Failed to update post:" + error);
+	}
+};

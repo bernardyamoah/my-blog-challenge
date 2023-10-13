@@ -18,33 +18,34 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { deletePost } from "@/lib/deletePost"
+import { useRouter } from "next/navigation"
+import { updatePost } from "@/lib/updatePost"
 export default function Post({post}) {
-    const {name, body, id} = post
-    const [updatedPost, setUpdatedPost] = useState({ name, body });
-   const [updatedName, setUpdatedName] = useState(name);
-    const [updatedBody, setUpdatedBody] = useState(body);
+    const {title, body, $id} = post
+    const router= useRouter()
+    const [updatedPost, setUpdatedPost] = useState({ title, body });
+   const [updatedName, setUpdatedName] = useState(title);
 const [showDialog, setShowDialog] = useState(false);
 const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const handleUpdate = () => {
-    setUpdatedPost({ name: updatedName, body: updatedBody})
-        toast.success("Post Loaded")
-        setShowDialog(false);
+    updatePost($id, { title: updatedPost.title, body: updatedPost.body })
     };
     const handleDelete = () => {
-     
-        toast.success("Post deleted")
+     deletePost($id)
         setShowDeleteDialog(false);
+        router.push('/')
     };
    
     return (
     <>
     <section >
- <div className="flex gap-6 items-center justify-center mb-10">
+ <div className="flex items-center justify-center gap-6 mb-10">
  <Button variant='destructive' onClick={() => setShowDeleteDialog(true)}>   <Trash className="w-4 h-4" /> </Button>
  <Button onClick={()=>setShowDialog(true)}>   <Edit className="w-4 h-4 " /> </Button>
  </div>
-        <h1 className="text-2xl md:text-3xl text-center text-semibold uppercase mb-6"> {updatedPost.name} </h1>
- <aside className=" max-w-xl mx-auto text-center  ">
+        <h1 className="mb-6 text-2xl text-center uppercase md:text-3xl text-semibold"> {title} </h1>
+ <aside className="max-w-xl mx-auto text-center ">
 {updatedPost.body}
  </aside></section>
 
@@ -77,7 +78,7 @@ const [showDeleteDialog, setShowDeleteDialog] = useState(false);
               <Label htmlFor="body" className="col-span-4 text-left">
                Body
               </Label>
-             <Textarea className="col-span-4 w-full h-44"       onChange={(event) => setUpdatedBody(event.target.value)}>
+             <Textarea className="w-full col-span-4 h-44"       onChange={(event) => setUpdatedBody(event.target.value)}>
              { updatedPost.body}
              </Textarea>
             </div>

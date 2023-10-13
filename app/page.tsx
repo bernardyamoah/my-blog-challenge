@@ -9,67 +9,46 @@ import {
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { PresetActions } from "@/components/blog-actions";
+import {getPosts} from "@/lib/getPosts";
+import { Badge } from "@/components/ui/badge";
 
-async function deletePost(id: number): Promise<void> {
-  try {
-    const response = await fetch(`https://api.example.com/posts/${id}`, {
-      method: 'DELETE',
-    });
 
-    if (response.ok) {
-      console.log(`Post with id ${id} deleted`);
-    } else {
-      console.error(`Failed to delete post with id ${id}`);
-    }
-  } catch (error) {
-    console.error(`An error occurred while deleting post with id ${id}`, error);
-  }
-}
-async function getPosts() {
-  const response = await fetch('https://jsonplaceholder.typicode.com/comments?postId=1');
-  if(!response.ok) {
-      throw new Error('Could not fetch post');
-  }
 
-  const data = await response.json();
-  
-
-  return data as Post[];
-}
 export default async function Home() {
-const posts= await getPosts();
-
-  return (
-   
+  
+const posts:Post[] = await getPosts();
+return (
   <section >
-  <h1 className="text-2xl md:text-5xl text-center text-bold uppercase mb-16">Blogs</h1>
-    <main className="pb-16 px-6 sm:grid sm:grid-cols-2 gap-6 md:grid-cols-3 max-w-6xl mx-auto place-content-center flex flex-wrap">
+
+  <h1 className="mb-16 text-2xl text-center uppercase md:text-5xl text-bold">Blogs</h1>
+    <main className="flex flex-wrap max-w-6xl gap-6 px-6 pb-16 mx-auto sm:grid sm:grid-cols-2 md:grid-cols-3 place-content-center">
     {posts.map((post) => (
-        <Card key={post.email} 
-          className="sm:max-w-2xl w-full rounded-xl shadow-md overflow-hidden md:max-w-sm self-center "
+        <Card key={post.$id} 
+          className="self-center w-full overflow-hidden shadow-md sm:max-w-2xl rounded-xl md:max-w-sm "
         >
           <CardHeader>
             <CardTitle className="flex justify-between text-2xl capitalize">
-              {post.name}
+              {post.title}
              
             </CardTitle>
+            <span className="text-sm hover:underline text-amber-500"
+            >
+              @{post.username}
+            </span>
           </CardHeader>
 
           <CardContent>
-            <Link
-              href={`/users/${post.id}`}
-              className="hover:underline text-amber-500  text-sm"
-            >
-              {post.email}
-            </Link>
-            <div className="mt-3 text-muted-foreground">{post.body}</div>
+           
+            <div className="truncate text-muted-foreground">{post.body}</div>
           </CardContent>
 
-          <CardFooter className="flex justify-end">
+          <CardFooter className="flex justify-between">
+            <Badge variant='outline' className="text-xs text-muted-foreground">
+              {new Date(post.$createdAt).toLocaleDateString()}
+            </Badge>
               <Link
-                href={`/post/${post.id}`}
-                className="hover:underline text-amber-500  text-sm"
+                href={`/post/${post.$id}`}
+                className="text-sm hover:underline text-amber-500"
                 >
                 <Button className="w-full h-full">
                 Read more
