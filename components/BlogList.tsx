@@ -16,8 +16,8 @@ export async function BlogList({posts}:PostProps) {
 {
 posts.map((post) => (
         <Card
-        key={post.id}
-        className="sm:max-w-2xl w-full rounded-xl shadow-md overflow-hidden md:max-w-sm self-center "
+        key={post.$id}
+        className="self-center w-full overflow-hidden shadow-md sm:max-w-2xl rounded-xl md:max-w-sm "
       >
         <CardHeader className="">
           <CardTitle className="w-full text-2xl [text-wrap:balance] tracking-wide truncate text-black dark:text-white font-semibold flex gap-4 justify-between">
@@ -26,7 +26,7 @@ posts.map((post) => (
                   </CardTitle>
           </CardHeader>
       
-           <CardContent className="truncate text-sm text-muted-foreground">
+           <CardContent className="text-sm truncate text-muted-foreground">
 
 {post.body}
            </CardContent>
