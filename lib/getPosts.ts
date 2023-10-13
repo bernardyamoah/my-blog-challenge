@@ -12,7 +12,7 @@ export const  getPosts= async (): Promise<any[]> => {
             [Query.limit(99), Query.orderDesc("$createdAt")]
 		);
 
-		console.log("🚀 ~ file: getPosts.ts:15 ~ getPosts ~ response.documents;:", response.documents)
+		
 		return response.documents;
 	} catch (error) {
 		throw error;

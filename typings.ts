@@ -5,7 +5,6 @@ interface Post {
     body: string;
     $id: string;
     username:string;
-    postId:number;
     $createdAt: string;
   }
 interface PostData{

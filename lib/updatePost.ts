@@ -14,7 +14,8 @@ export const updatePost = async (id: string, updatedAttributes: any) => {
 			toast.success("Successfully updated post");
 		
 	} catch (error) {
-		// Handle any errors that occur during the update process
+		
 		toast.error("Failed to update post:" + error);
+		console.log("🚀 ~ file: updatePost.ts:19 ~ updatePost ~ error:", error)
 	}
 };

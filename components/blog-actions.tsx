@@ -47,7 +47,7 @@ const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 updateForm({
   title:'',
   body:'',
-  username:'',
+  username:''
  
 });
 }

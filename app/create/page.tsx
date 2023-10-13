@@ -9,7 +9,7 @@ export default function page() {
         title:'',
         body:'',
         username:'',
-        postId:''
+  
     })
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -19,13 +19,13 @@ export default function page() {
     const handleSubmit =async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
          
-       await createPost({ ...form, postId: parseInt(form.postId) })
+       await createPost({ ...form })
         // Reset the form values
     updateForm({
         title:'',
         body:'',
         username:'',
-        postId:''
+
     });
     }
 
@@ -47,10 +47,7 @@ export default function page() {
                     <label>Username:</label>
                     <Input type='text' name='username' value={form.username} onChange={handleInputChange} />
                 </div>
-                <div>
-                    <label>Post ID:</label>
-                    <Input type='text' name='postId' value={form.postId} onChange={handleInputChange} />
-                </div>
+           
                 <Button type="submit">Create</Button>
             </form>
     </div>
