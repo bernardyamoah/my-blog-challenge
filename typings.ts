@@ -12,5 +12,5 @@ interface PostData{
     title:string;
     body:string;
     username:string;
-    postId:number;
+   
 }
